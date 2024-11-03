@@ -30,7 +30,6 @@ class MyHomePage extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
@@ -44,17 +43,19 @@ class MyHomePage extends StatelessWidget {
 
             Center(
               child: Column(
+
                 children: [
                   const Padding(
                     padding: EdgeInsets.only(top: 16.0),
                     child: Text(
-                      'Welcome to The Mobile Bakery',
+                      "Welcome to Janssen's Mobile Bakery",
                       style: TextStyle(
                         fontWeight: FontWeight.bold,
                         fontSize: 18.0,
                       ),
                     ),
                   ),
+
                   GridView.count(
                     primary: true,
                     padding: const EdgeInsets.all(20),
@@ -62,6 +63,7 @@ class MyHomePage extends StatelessWidget {
                     mainAxisSpacing: 10,
                     crossAxisCount: 3,
                     shrinkWrap: true,
+
                     children: items.map((ItemHomepage item) {
                       return ItemCard(item);
                     }).toList(),
@@ -69,7 +71,6 @@ class MyHomePage extends StatelessWidget {
                 ],
               ),
             ),
-            
           ],
         ),
       ),
