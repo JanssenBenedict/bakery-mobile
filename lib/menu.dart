@@ -82,6 +82,7 @@ class InfoCard extends StatelessWidget {
 
   final String title;
   final String content;
+  
   const InfoCard({super.key, required this.title, required this.content});
 
   @override
