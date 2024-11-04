@@ -47,15 +47,15 @@ const dan final digunakan dalam Dart untuk membuat variabel yang bersifat immuta
 
 ### 5. Jelaskan bagaimana cara kamu mengimplementasikan checklist-checklist di atas.
 1. Membuat sebuah program Flutter baru dengan tema E-Commerce yang sesuai dengan tugas-tugas sebelumnya.
-Jawaban:
+<br>Jawaban:<br>
 Saya memutuskan untuk membuat program Flutter baru bernama Bakery Mobile, yang merupakan aplikasi bertema E-Commerce versi mobile dari aplikasi Bakery yang sebelumnya dibuat pada Django. Saya membuat proyek Flutter baru tersebut dengan menjalankan perintah
 ```bash
 flutter create bakery_mobile
 ```
 Setelah memastikan bahwa proyek baru tersebut dapat dijalankan pada Google Chrome, saya kemudian berlanjut ke proses pembuatan code Dart untuk halaman pada aplikasi Flutter ini.
 
-* Sebelum menjelaskan pengimplementasian tombol dan SnackBar secara spesifik, perlu dijelaskan pengimplementasian file main.dart dan menu.dart secara general terlebih dahulu.
-- Untuk file main.dart, terdapat entry point dari aplikasi Bakery Mobile itu melalui fungsi main(). Fungsi main() akan memanggil fungsi runApp() yang akan menjalankan aplikasi tersebut dengan membuat instance dari MyApp. Instance ini akan membantu dalam penjalanan program Flutter Bakery Mobile.
+Sebelum menjelaskan pengimplementasian tombol dan SnackBar secara spesifik, perlu dijelaskan pengimplementasian file main.dart dan menu.dart secara general terlebih dahulu.
+Untuk file main.dart, terdapat entry point dari aplikasi Bakery Mobile itu melalui fungsi main(). Fungsi main() akan memanggil fungsi runApp() yang akan menjalankan aplikasi tersebut dengan membuat instance dari MyApp. Instance ini akan membantu dalam penjalanan program Flutter Bakery Mobile.
 ```dart
 void main() {
   runApp(const MyApp());
@@ -81,7 +81,7 @@ class MyApp extends StatelessWidget {
   }
 }
 ```
-- Untuk file menu.dart, terdapat berbagai widget dan komponen lainnya yang berfungsi dalam membentuk tampilan dan fungsionalitas pada halaman utama aplikasi Flutter tersebut. Terdapat Stateless Widget MyHomePage yang mengatur tampilan halaman utamanya, widget tersebut mengandung beberapa variabel untuk merepresentasikan data nama, NPM, kelas, dan list bernama items berisi instance ItemHomePage yang akan ditampilkan nanti sebagai tombol pada layar. Pada MyHomePage, terdapat method build() yang membangun Scaffold untuk layout halaman utama di aplikasi. Pada Scaffold, terdapat AppBar yang akan menampilkan toolbar di ujung atas dengan judul dari aplikasinya serta kustomisasi font dan warna. Terdapat juga bagian body di mana terdapat suatu widget Column (dengan Padding) yang memiliki widget Row yang menampilkan informasi NPM, nama, dan kelas dalam 1 baris, widget Column (posisi memanfaatkan Center) yang mengandung suatu pesan teks (dengan Padding), serta widget Gridview untuk menampilkan masing-masing ItemCard dalam layout grid.
+Untuk file menu.dart, terdapat berbagai widget dan komponen lainnya yang berfungsi dalam membentuk tampilan dan fungsionalitas pada halaman utama aplikasi Flutter tersebut. Terdapat Stateless Widget MyHomePage yang mengatur tampilan halaman utamanya, widget tersebut mengandung beberapa variabel untuk merepresentasikan data nama, NPM, kelas, dan list bernama items berisi instance ItemHomePage yang akan ditampilkan nanti sebagai tombol pada layar. Pada MyHomePage, terdapat method build() yang membangun Scaffold untuk layout halaman utama di aplikasi. Pada Scaffold, terdapat AppBar yang akan menampilkan toolbar di ujung atas dengan judul dari aplikasinya serta kustomisasi font dan warna. Terdapat juga bagian body di mana terdapat suatu widget Column (dengan Padding) yang memiliki widget Row yang menampilkan informasi NPM, nama, dan kelas dalam 1 baris, widget Column (posisi memanfaatkan Center) yang mengandung suatu pesan teks (dengan Padding), serta widget Gridview untuk menampilkan masing-masing ItemCard dalam layout grid.
 ```dart
 class MyHomePage extends StatelessWidget {
   final String npm = '2306152102';
@@ -254,7 +254,7 @@ class ItemCard extends StatelessWidget {
 - Melihat daftar produk (Lihat Daftar Produk)
 - Menambah produk (Tambah Produk)
 - Logout (Logout)
-Jawaban:
+<br>Jawaban:<br>
 Tiga tombol sederhana tersebut dapat diimplementasikan dengan ItemHomePage dan ItemCard. Seperti yang sudah dijelaskan sebelumnya, ItemHomePage menyediakan property untuk nama, ikon, dan juga warna dari item yang nanti akan ditampilkan sebagai suatu tombol di halaman utama. Pada widget MyHomePage, dibuatlah suatu list yang berisi instance dari ItemHomePage, masing-masing dengan nama, ikon gambar, dan juga warnanya sendiri.
 ```dart
 ...
@@ -302,7 +302,7 @@ Akhirnya, sesuai dengan apa yang dijelaskan sebelumnya, pada method build() di I
 
 
 3. Mengimplementasikan warna-warna yang berbeda untuk setiap tombol (Lihat Daftar Produk, Tambah Produk, dan Logout).
-Jawaban:
+<br>Jawaban:<br>
 Untuk mengimplementasikan warna-warna yang berbeda untuk setiap tombol, properties pada class ItemHomePage harus ditambah property warna.
 ```dart
 class ItemHomepage {
@@ -339,7 +339,7 @@ Akhirnya, pada method build() di ItemCard, saat proses membentuk tampilan card u
 - "Kamu telah menekan tombol Lihat Daftar Produk" ketika tombol Lihat Daftar Produk ditekan.
 - "Kamu telah menekan tombol Tambah Produk" ketika tombol Tambah Produk ditekan.
 - "Kamu telah menekan tombol Logout" ketika tombol Logout ditekan.
-Jawaban:
+<br>Jawaban:<br>
 Agar dapat memunculkan Snackbar dengan tulisan tersebut saat masing-masing tombol ditekan, pada method build() di ItemCard, perlu ditambahkan berikut ini.
 ```dart
     child: InkWell(
@@ -356,9 +356,9 @@ Agar dapat memunculkan Snackbar dengan tulisan tersebut saat masing-masing tombo
 Property onTap pada widget Inkwell di-set agar tampilan SnackBar yang mungkin sudah ada pada layar untuk ditutup dan menampilkan SnackBar baru dengan pesan yang menyatakan bahwa tombol/card tersebut telah ditekan.
 
 5. Menjawab beberapa pertanyaan berikut pada README.md pada root_folder.
-Jawaban:
+<br>Jawaban:<br>
 Saya menjawab pertanyaan-pertanyaan tersebut pada file README.md di direktori utama proyek ini.
 
 6. Melakukan add-commit-push ke suatu repositori baru di GitHub.
-Jawaban:
+<br>Jawaban:<br>
 Setelah memastikan bahwa Tugas 7 telah dikerjakan dengan lengkap, saya melakukan command git add, commit, dan push ke repositori bakery-mobile di GitHub.
