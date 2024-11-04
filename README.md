@@ -250,10 +250,7 @@ class ItemCard extends StatelessWidget {
 }
 ```
 
-2. Membuat tiga tombol sederhana dengan ikon dan teks untuk:
-- Melihat daftar produk (Lihat Daftar Produk)
-- Menambah produk (Tambah Produk)
-- Logout (Logout)
+2. Membuat tiga tombol sederhana dengan ikon dan teks untuk: Melihat daftar produk (Lihat Daftar Produk), menambah produk (Tambah Produk), dan Logout (Logout).
 <br>Jawaban:<br>
 Tiga tombol sederhana tersebut dapat diimplementasikan dengan ItemHomePage dan ItemCard. Seperti yang sudah dijelaskan sebelumnya, ItemHomePage menyediakan property untuk nama, ikon, dan juga warna dari item yang nanti akan ditampilkan sebagai suatu tombol di halaman utama. Pada widget MyHomePage, dibuatlah suatu list yang berisi instance dari ItemHomePage, masing-masing dengan nama, ikon gambar, dan juga warnanya sendiri.
 ```dart
@@ -335,10 +332,7 @@ Akhirnya, pada method build() di ItemCard, saat proses membentuk tampilan card u
 ...
 ```
 
-4. Memunculkan Snackbar dengan tulisan:
-- "Kamu telah menekan tombol Lihat Daftar Produk" ketika tombol Lihat Daftar Produk ditekan.
-- "Kamu telah menekan tombol Tambah Produk" ketika tombol Tambah Produk ditekan.
-- "Kamu telah menekan tombol Logout" ketika tombol Logout ditekan.
+4. Memunculkan Snackbar dengan tulisan: "Kamu telah menekan tombol Lihat Daftar Produk" ketika tombol Lihat Daftar Produk ditekan, "Kamu telah menekan tombol Tambah Produk" ketika tombol Tambah Produk ditekan, dan "Kamu telah menekan tombol Logout" ketika tombol Logout ditekan.
 <br>Jawaban:<br>
 Agar dapat memunculkan Snackbar dengan tulisan tersebut saat masing-masing tombol ditekan, pada method build() di ItemCard, perlu ditambahkan berikut ini.
 ```dart
