@@ -297,7 +297,6 @@ Akhirnya, sesuai dengan apa yang dijelaskan sebelumnya, pada method build() di I
 ...
 ```
 
-
 3. Mengimplementasikan warna-warna yang berbeda untuk setiap tombol (Lihat Daftar Produk, Tambah Produk, dan Logout).
 <br>Jawaban:<br>
 Untuk mengimplementasikan warna-warna yang berbeda untuk setiap tombol, properties pada class ItemHomePage harus ditambah property warna.
@@ -357,15 +356,165 @@ Saya menjawab pertanyaan-pertanyaan tersebut pada file README.md di direktori ut
 <br>Jawaban:<br>
 Setelah memastikan bahwa Tugas 7 telah dikerjakan dengan lengkap, saya melakukan command git add, commit, dan push ke repositori bakery-mobile di GitHub.
 
+<br>
 
 ### ---------------------------------------------------------TUGAS 8---------------------------------------------------------
 
 ### 1. Apa kegunaan const di Flutter? Jelaskan apa keuntungan ketika menggunakan const pada kode Flutter. Kapan sebaiknya kita menggunakan const, dan kapan sebaiknya tidak digunakan?
+Di Flutter, kegunaan dari keyword const adalah membuat objek yang tidak dapat berubah (immutable), suatu objek yang seharusnya tidak diubah selama masa pakai dari aplikasi Flutter yang memilikinya tepat menggunakan keyword const saat dideklarasikan. Keuntungan dari penggunaan const pada Flutter diantaranya adalah optimasi kinerja karena objek tersebut hanya perlu ditentukan atau dibuat sekali pada compile time dan digunakan kembali pada runtime tanpa perubahan (compile-time constant). Selain itu, keuntungan lainnya adalah meningkatkan efisiensi penggunaan memory karena Flutter akan selalu merujuk pada satu instance objek (yang dideklarasikan dengan const) tersebut yang sama bila objek tersebut digunakan pada aplikasinya. Oleh karena itu, jumlah alokasi memory selama runtime berkurang karena Flutter tidak perlu membuat instance baru dari objek tersebut setiap kali digunakan. Sebaiknya, const digunakan pada widget yang tidak akan berubah (Stateless Widget) dan nilai-nilai yang tetap (seperti warna, padding, margin, teks, dan elemen lainnya yang tidak diinginkan untuk berubah). const sebaiknya tidak digunakan pada widget yang dapat berubah selama aplikasi berjalan (Stateful Widget) dan nilai-nilai yang dinamis (dapat berubah pada runtime berdasarkan perilaku pengguna atau perubahan data).
 
 ### 2. Jelaskan dan bandingkan penggunaan Column dan Row pada Flutter. Berikan contoh implementasi dari masing-masing layout widget ini!
+Column merupakan widget pada Flutter yang digunakan untuk menyusun sekumpulan widget di dalam property children-nya (child widget) dalam posisi vertikal, terdapat property mainAxisAlignment untuk mengatur posisi widget pada sumbu vertikal dan crossAxisAlignment untuk mengatur posisi widget pada sumbu horizontal. Sementara itu, Row merupakan widget pada Flutter yang digunakan untuk menyusun sekumpulan widget di dalam property children-nya (child widget) dalam posisi horizontal, terdapat property mainAxisAlignment untuk mengatur posisi widget pada sumbu horizontal dan crossAxisAlignment untuk mengatur posisi widget pada sumbu vertikal.
+Contoh implementasi dari widget Column terdapat dalam proyek Flutter ini pada bagian body dari Scaffold di method build() widget MyHomePage.
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      ...
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                InfoCard(title: 'NPM', content: npm),
+                InfoCard(title: 'Name', content: name),
+                InfoCard(title: 'Class', content: className),
+              ],
+            ),
+            const SizedBox(height: 16.0),
+            Center(
+              child: Column(
+                children: [
+                  const Padding(
+                    padding: EdgeInsets.only(top: 16.0),
+                    child: Text(
+                      "Welcome to Janssen's Mobile Bakery",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        fontSize: 18.0,
+                      ),
+                    ),
+                  ),
+                  ...
+                ],
+              ),
+            ),
+          ],
+        ),
+      ),
+    );
+  }
+```
+Widget Column utama yang terdapat di dalam widget Padding itu mengatur posisi child widget secara vertikal serta memposisikan child widget di tengah pada sumbu horizontal. Kemudian, salah satu child widget di dalamnya adalah widget Center yang mengatur child widgetnya untuk berada di posisi tengah layar. Salah satu child widget dari widget Center ini adalah widget Column juga, yang akan menampilkan child widgetnya sendiri secara vertikal pada satu kolom teratur. Kemudian, implementasi dari widget Row terdapat dalam proyek Flutter ini pada bagian tersebut juga, sebagai salah satu child widget dari widget Column yang pertama. Widget Row tersebut akan menampilkan tiga widget InfoCard secara horizontal pada satu baris teratur dengan pengaturan bahwa masing-masing widget InfoCard memiliki jarak antar-widget yang sama sepanjang baris tersebut.
 
 ### 3. Sebutkan apa saja elemen input yang kamu gunakan pada halaman form yang kamu buat pada tugas kali ini. Apakah terdapat elemen input Flutter lain yang tidak kamu gunakan pada tugas ini? Jelaskan!
+Elemen input yang saya gunakan pada halaman form yang saya buat (product_form.dart) adalah TextFormField. TextFormField digunakan untuk menciptakan field yang menerima input teks dari pengguna yang mengakses aplikasinya. Pada proyek Flutter ini, TextFormField digunakan untuk menerima input nama, jumlah atau kuantitas, deskripsi, harga, dan kategori produk yang ingin dibuat melalui halaman form untuk menambahkan produk baru. Pada masing-masing TextFormField tersebut, saya mengimplementasikan property seperti maxlength untuk menyatakan batas karakter yang dapat diinput dan juga validator untuk memastikan bahwa input tidak kosong (atau bernilai negatif untuk input harga dan jumlah produk). Elemen input Flutter lain yang tidak digunakan pada tugas ini diantaranya adalah Radio (memberikan beberapa opsi input tunggal dan salah satu opsi dapat dipilih dengan mengklik tombol dengan opsi tersebut), CheckBox (memberikan beberapa opsi input dan beberapa opsi dapat dipilih dengan mencentang kotak dengan opsi tersebut), Slider (memberikan opsi nilai dalam suatu rentang tertentu yang nilainya dapat di-set dengan menetapkan posisi pada slider), Switch (memberikan opsi input boolean yang dapat di-set dengan melakukan toggle pada tombol dengan opsi tersebut), DatePicker (menerima opsi input tanggal dengan date picker dialog), dan TimePicker (menerima opsi input waktu dengan time picker dialog).
 
 ### 4. Bagaimana cara kamu mengatur tema (theme) dalam aplikasi Flutter agar aplikasi yang dibuat konsisten? Apakah kamu mengimplementasikan tema pada aplikasi yang kamu buat?
+Pengaturan theme dari aplikasi Flutter agar terlihat konsisten dilakukan pada widget MyApp di main.dart. Pada method build() di widget MyApp, dikembalikan suatu MaterialApp yang menyediakan struktur dasar dan komponen penting untuk aplikasi Flutter ini. Di MaterialApp tersebut, terdapat property theme untuk merepresentasikan theme dari aplikasi ini. Theme dari aplikasi diatur menggunakan ThemeData, yang sudah di-set untuk mengatur skema warna utama dan sekunder aplikasi ini dan juga menggunakan Material Design 3 untuk proses styling.
+```dart
+class MyApp extends StatelessWidget {
+  const MyApp({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return MaterialApp(
+      title: 'Bakery Mobile',
+      theme: ThemeData(
+        colorScheme: ColorScheme.fromSwatch(
+              primarySwatch: Colors.deepOrange,
+        ).copyWith(secondary: Colors.deepOrange[400]),
+        useMaterial3: true,
+      ),
+      home: MyHomePage(),
+    );
+  }
+}
+```
 
 ### 5. Bagaimana cara kamu menangani navigasi dalam aplikasi dengan banyak halaman pada Flutter?
+Proses navigasi dalam aplikasi ini dilakukan dengan widget Navigator, yang berfungsi dalam mengatur navigasi dan menampilkan halaman-halaman yang ada ke layar seperti sebuah stack. Navigator diakses melalui BuildContext dan memanggil fungsi atau method tertentu untuk melakukan proses navigasi, seperti push(), pop(), dan pushReplacement(). Method push() menambahkan suatu route ke stack route yang dikelola Navigator dan ditampilkan kepada pengguna pada layar. Method pop() menghapus route yang berada di posisi paling atas pada stack route (yang sedang ditampilkan ke pengguna) sehingga tampilan halaman aplikasi pada layar berpindah ke route yang berada di bawah route yang dihapus pada stack route. Method pushReplacement() menghapus route yang sedang ditampilkan ke pengguna pada layar dan menggantikannya dengan route lain, jadi tampilan layar akan berubah ke route yang menggantikan route yang dihapus.
+Pada product_card.dart, di widget ItemCard, terdapat method build(). Method itu mengembalikan suatu widget Material yang membentuk card tombol yang ingin ditampilkan pada halaman utama. Pada property onTap di widget Inkwell pada bagian child di widget Material, dinyatakan bahwa jika item ItemHomePage yang ingin dibentuk menjadi tombol itu merupakan tombol untuk menambah produk baru, maka halaman form untuk menambah produk baru akan ditampilkan kepada pengguna saat tombol itu ditekan.
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      ...
+      child: InkWell(
+        onTap: () {
+          ...
+          if (item.name == "Tambah Produk") {
+            Navigator.push(
+              context, MaterialPageRoute(
+                builder: (context) => const ProductFormPage(),
+              ),
+            );
+          }
+        },
+        ...
+      ),
+    );
+  }
+```
+Pada left_drawer.dart, di widget LeftDrawer, terdapat method build(). Method itu mengembalikan widget Drawer yang akan membentuk suatu Drawer di sebelah kiri layar yang dapat ditampilkan untuk mengakses halaman utama dan halaman untuk menambah produk baru. Oleh karena itu, di dalam spesifikasi widget Drawer tersebut, terdapat dua widget ListTitle untuk membentuk dua item pada drawer tersebut, yaitu item-item dengan judul "Halaman Utama" dan "Tambah Item" yang masing-masing akan menampilkan halaman utama dan halaman untuk menambahkan produk baru bila ditekan.
+```dart
+  @override
+  Widget build(BuildContext context) {
+    return Drawer(
+      child: ListView(
+        children: [
+          ...
+          ListTile(
+            leading: const Icon(Icons.home_outlined),
+            title: const Text('Halaman Utama'),
+            onTap: () {
+              Navigator.pushReplacement(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => MyHomePage(),
+                  ));
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.mood),
+            title: const Text('Tambah Item'),
+            onTap: () {
+              Navigator.push(
+                context, MaterialPageRoute(
+                  builder: (context) => const ProductFormPage(),
+                ),
+              );
+            },
+          ),
+        ],
+      ),
+    );
+  }
+```
+Pada product_form.dart, terdapat _ProductFormPageState dengan method build(). Method ini akan mengembalikan widget Scaffold yang akan membangun atau mengatur halaman form untuk menambah produk baru. Di dalam pengaturan elemen-elemen yang terdapat pada Scaffold tersebut, dispesifikasikan bahwa setelah pengguna mengisi field input untuk produk baru serta menekan tombol "Save", program akan melakukan proses validasi terhadap input tersebut. Jika data yang diinput sudah valid, maka akan muncul suatu dialog (dengan widget AlertDialog) yang akan menyatakan informasi detail mengenai produk yang baru saja dibuat. Karena fungsi showDialog() digunakan, suatu route baru ditambahkan ke stack route, dan route tersebut menampilkan dialog dengan detail produk itu. Pada dialog tersebut, terdapat tombol "OK". Bila tombol itu ditekan, route yang baru saja ditambahkan ke stack route dihapus dan menampilkan kembali halaman untuk menambah produk baru kepada pengguna.
+```dart
+      ...
+      if (_formKey.currentState!.validate()) {
+        showDialog(
+          context: context,
+          builder: (context) {
+            return AlertDialog(
+              ...
+              actions: [
+                TextButton(
+                  child: const Text('OK'),
+                  onPressed: () {
+                    Navigator.pop(context);
+                    _formKey.currentState!.reset();
+                  },
+                ),
+              ],
+            );
+          },
+        );
+      }
+      ...
+```
