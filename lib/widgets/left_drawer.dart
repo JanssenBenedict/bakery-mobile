@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:bakery_mobile/screens/menu.dart';
 import 'package:bakery_mobile/screens/product_form.dart';
+import 'package:bakery_mobile/screens/list_product.dart';
 
 class LeftDrawer extends StatelessWidget {
   const LeftDrawer({super.key});
@@ -50,12 +51,23 @@ class LeftDrawer extends StatelessWidget {
             },
           ),
           ListTile(
-            leading: const Icon(Icons.mood),
+            leading: const Icon(Icons.cake),
             title: const Text('Tambah Item'),
             onTap: () {
               Navigator.push(
                 context, MaterialPageRoute(
                   builder: (context) => const ProductFormPage(),
+                ),
+              );
+            },
+          ),
+          ListTile(
+            leading: const Icon(Icons.add_reaction_rounded),
+            title: const Text('Daftar Produk'),
+            onTap: () {
+              Navigator.push(
+                context, MaterialPageRoute(
+                  builder: (context) => const ProductPage()
                 ),
               );
             },

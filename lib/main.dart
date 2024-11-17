@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:bakery_mobile/screens/menu.dart';
+import 'package:bakery_mobile/screens/login.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 void main() {
   runApp(const MyApp());
@@ -10,15 +12,21 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Bakery Mobile',
-      theme: ThemeData(
-        colorScheme: ColorScheme.fromSwatch(
-              primarySwatch: Colors.deepOrange,
-        ).copyWith(secondary: Colors.deepOrange[400]),
-        useMaterial3: true,
+    return Provider(
+      create: (_) {
+        CookieRequest request = CookieRequest();
+        return request;
+      },
+      child: MaterialApp(
+        title: 'Bakery Mobile',
+        theme: ThemeData(
+          useMaterial3: true,
+          colorScheme: ColorScheme.fromSwatch(
+            primarySwatch: Colors.deepOrange,
+          ).copyWith(secondary: Colors.deepOrange[400]),
+        ),
+        home: const LoginPage(),
       ),
-      home: MyHomePage(),
     );
   }
 }

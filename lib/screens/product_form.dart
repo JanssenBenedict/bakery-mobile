@@ -1,4 +1,8 @@
+import 'dart:convert';
+import 'package:bakery_mobile/screens/menu.dart';
 import 'package:flutter/material.dart';
+import 'package:pbp_django_auth/pbp_django_auth.dart';
+import 'package:provider/provider.dart';
 
 class ProductFormPage extends StatefulWidget {
   const ProductFormPage({super.key});
@@ -14,8 +18,10 @@ class _ProductFormPageState extends State<ProductFormPage> {
 	int _amount = 0;
   int _price = 0;
   String _category = "";
+
   @override
   Widget build(BuildContext context) {
+    final request = context.watch<CookieRequest>();
     return Scaffold(
       appBar: AppBar(
         title: const Center(
@@ -173,39 +179,38 @@ class _ProductFormPageState extends State<ProductFormPage> {
                       backgroundColor: WidgetStateProperty.all(
                           Theme.of(context).colorScheme.primary),
                     ),
-                    onPressed: () {
-                      if (_formKey.currentState!.validate()) {
-                        showDialog(
-                          context: context,
-                          builder: (context) {
-                            return AlertDialog(
-                              title: const Text('New Product Saved!'),
-                              content: SingleChildScrollView(
-                                child: Column(
-                                  crossAxisAlignment: CrossAxisAlignment.start,
-                                  children: [
-                                    const Text('Product Details:', style: TextStyle(fontWeight: FontWeight.bold)),
-                                    Text('Name: $_name'),
-                                    Text('Amount: ${_amount == 0 ? "OUT OF STOCK" : _amount}'),
-                                    Text('Description: $_description'),
-                                    Text('Price: ${_price == 0 ? "FREE" : _price}'),
-                                    Text('Category: $_category'),
-                                  ],
-                                ),
-                              ),
-                              actions: [
-                                TextButton(
-                                  child: const Text('OK'),
-                                  onPressed: () {
-                                    Navigator.pop(context);
-                                    _formKey.currentState!.reset();
-                                  },
-                                ),
-                              ],
+                    onPressed: () async {
+                        if (_formKey.currentState!.validate()) {
+                            final response = await request.postJson(
+                                "http://localhost:8000/create-flutter/",
+                                jsonEncode(<String, String>{
+                                    'name': _name,
+                                    'amount': _amount.toString(),
+                                    'description': _description,
+                                    'price': _price.toString(),
+                                    'category': _category,
+                                    'quantity': _amount.toString(),
+                                }),
                             );
-                          },
-                        );
-                      }
+                            if (context.mounted) {
+                                if (response['status'] == 'success') {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                    content: Text("New product successfully created!"),
+                                    ));
+                                    Navigator.pushReplacement(
+                                        context,
+                                        MaterialPageRoute(builder: (context) => MyHomePage()),
+                                    );
+                                } else {
+                                    ScaffoldMessenger.of(context)
+                                        .showSnackBar(const SnackBar(
+                                        content:
+                                            Text("There seems to have been a problem, try again!"),
+                                    ));
+                                }
+                            }
+                        }
                     },
                     child: const Text("Save", style: TextStyle(color: Color.fromARGB(255, 255, 247, 211)),
                     ),
