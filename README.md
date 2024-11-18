@@ -518,3 +518,22 @@ Pada product_form.dart, terdapat _ProductFormPageState dengan method build(). Me
       }
       ...
 ```
+
+<br>
+
+### ---------------------------------------------------------TUGAS 8---------------------------------------------------------
+
+### 1. Jelaskan mengapa kita perlu membuat model untuk melakukan pengambilan ataupun pengiriman data JSON? Apakah akan terjadi error jika kita tidak membuat model terlebih dahulu?
+Pembuatan model untuk melakukan pengambilan atau pengiriman data JSON pada suatu proyek Flutter yang akan melakukan pemanggilan web service diperlukan karena dapat mempermudah pendefinisian struktur data yang akan dipakai pada proyek Flutter. Dengan melakukan pembuatan suatu model atau class Dart, proyek Flutter akan secara dinamis mampu merepresentasikan struktur data yang di-parse dari atau dikonversikan menjadi JSON. Model juga dapat membantu dalam membuat data tersebut menjadi lebih mudah untuk dipahami dan digunakan serta memastikan tipe data yang diterima atau dikirim sesuai dengan yang diinginkan. Bila kita tidak membuat model terlebih dahulu, penggunaan struktur data Map<String, dynamic> secara langsung perlu dilakukan. Hal tersebut akan membuat pengelolaan data tersebut menjadi lebih rumit dan lebih rentan terhadap permasalahan sebab struktur data JSON perlu diketahui secara lengkap agar dapat diimplementasikan dengan benar. Selain itu, validasi terhadap tipe data JSON tidak ada bila model tidak dibuat, sehingga perlu dilakukan validasi data secara manual. Tanpa adanya suatu model, bila terjadi perubahan pada struktur data JSON-nya, seperti perubahan pada nama JSON properties, tidak akan ada property model Dart yang dapat dimodifikasi untuk menampung property JSON tersebut, setiap pengaksesan data JSON harus diubah secara manual agar dapat memanggil property JSON yang benar.
+
+### 2. Jelaskan fungsi dari library http yang sudah kamu implementasikan pada tugas ini.
+Pada tugas ini, fungsi dari library http adalah untuk melakukan pembuatan dan pengiriman request HTTP ke web service Django (bakery). Setelah dependensi package HTTP ditambahkan pada proyek Flutter, library http dapat dimanfaatkan untuk membuat dan mengirim suatu request HTTP (seperti GET atau POST) ke web service Django agar melakukan proses fetching data dari web service tersebut ke proyek Flutter. Response yang diperoleh dari request HTTP tersebut mengandung data yang ingin di-fetch dari web service Django-nya. Dalam tugas ini, implementasi dari library http dicakupi oleh package pbp_django_auth, yang memerlukan library http sebagai salah satu dependency-nya.
+
+### 3. Jelaskan fungsi dari CookieRequest dan jelaskan mengapa instance CookieRequest perlu untuk dibagikan ke semua komponen di aplikasi Flutter.
+CookieRequest berfungsi dalam menangani request HTTP yang memanfaatkan cookies untuk mengatur session. CookieRequest menyimpan cookies yang diperoleh dari suatu server atau web service yang dituju oleh request HTTP tersebut selama proses autentikasi serta menggunakannya untuk menetapkan keaktifan session seorang pengguna aplikasi Flutter tersebut. Membagikan suatu instance CookieRequest ke semua komponen pada aplikasi Flutter tersebut diperlukan agar setiap bagian dari aplikasi Flutter tersebut dapat menggunakan data session atau state autentikasi yang sama dan konsisten tanpa perlu melakukan autentikasi ulang setiap kali request HTTP dilakukan. Selain itu, dengan menetapkan satu instance CookieRequest ke semua komponen, risiko kebocoran atau penanganan yang salah terhadap informasi session berkurang.
+
+### 4. Jelaskan mekanisme pengiriman data mulai dari input hingga dapat ditampilkan pada Flutter.
+
+### 5. Jelaskan mekanisme autentikasi dari login, register, hingga logout. Mulai dari input data akun pada Flutter ke Django hingga selesainya proses autentikasi oleh Django dan tampilnya menu pada Flutter.
+
+### 6. Jelaskan bagaimana cara kamu mengimplementasikan checklist di atas secara step-by-step! (bukan hanya sekadar mengikuti tutorial).
