@@ -35,10 +35,7 @@ class ProductDetails extends StatelessWidget {
           children: [
             Text(
               "Product Name: $name",
-              style: const TextStyle(
-                fontSize: 24.0,
-                fontWeight: FontWeight.bold,
-              ),
+              style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
             ),
             const SizedBox(height: 20),
             Text(

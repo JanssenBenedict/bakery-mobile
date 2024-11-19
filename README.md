@@ -560,15 +560,91 @@ Pertama-tama, perlu dibuat aplikasi baru pada proyek Django bakery, yaitu authen
 
 5. Membuat model kustom sesuai dengan proyek aplikasi Django.
 <br>Jawaban:<br>
+Dengan memanfaatkan endpoint JSON yang terdapat pada proyek Django bakery, saya mampu menggunakan Quicktype untuk membuat suatu model kustom untuk suatu produk dalam aplikasi Flutter bakery_mobile ini. Definisi model tersebut terdapat pada file product.dart di direktori lib/models. Model kustom yang dibuat bernama Product dan merepresentasikan suatu produk pada aplikasi ini. Model Product didefinisikan menggunakan class dengan property tipe model, ID primary key, dan objek fields. Suatu instance/objek Product dapat dibuat dengan memenuhi ketiga parameter property tersebut. Selain itu, terdapat constructor object Product yang dapat memperoleh data Map<String, dynamic> (objek JSON) dan menjadikannya sebagai nilai property pada suatu objek Product baru serta terdapat method toJson() yang dapat mengubah data pada objek Product ke Map<String, dynamic> (objek JSON). Kemudian, terdapat class Fields yang merepresentasikan atribut-atribut dari suatu produk pada aplikasi ini. Property yang dimiliki class tersebut yang masing-masing merepresentasikan atribut produk adalah ID user yang membuat produknya, nama, harga, deskripsi, kategori, dan kuantitas produk tersebut. Pada class Fields, terdapat constructor object Fields yang memperoleh data Map<String, dynamic> (objek JSON) dan menjadikannya sebagai nilai property pada suatu objek Fields serta terdapat method toJson() yang dapat mengubah data pada objek Fields ke Map<String, dynamic> (objek JSON). Selain pendefinisian model produk itu, terdapat fungsi untuk mengambil input string JSON, melakukan decoding, dan memetakan masing-masing objek JSON ke instance Product baru (productFromJson), dan terdapat juga fungsi untuk memperoleh data pada kumpulan instance Product, melakukan encoding, dan menghasilkan string JSON dari data tersebut.
 
 6. Membuat halaman yang berisi daftar semua item yang terdapat pada endpoint JSON di Django yang telah kamu deploy. Tampilkan name, price, dan description dari masing-masing item pada halaman ini.
 <br>Jawaban:<br>
+Setelah menambahkan package http dan memperbolehkan akses internet pada aplikasi Flutter ini, saya membuat file list_product.dart, yang menangani halaman daftar semua item di endpoint JSON pada proyek Django bakery. Pada kode di file tersebut, terdapat widget ProductPage yang akan membuat state baru pada halaman daftar produk dengan memanggil class _ProductPageState. Pada class _ProductPageState, terdapat fungsi fetchProducts() yang menggunakan CookieRequest untuk mengirimkan request http GET ke endpoint JSON di proyek Django bakery dan memperoleh data JSON yang dikonversikan menjadi daftar objek-objek Product. Kemudian, pada method build(), diimplementasikan berbagai widget untuk membangun tampilan halaman daftar produk. Produk-produk yang telah dibuat oleh pengguna ditampilkan dalam satu kolom menggunakan ListView.builder dengan masing-masing produk ditampilkan dalam suatu Container. Atribut dari produk yang ditampilkan adalah nama, harga, dan deskripsi produknya. Jika satu produk dalam daftar tersebut diklik, maka pengguna akan dinavigasikan ke halaman detail untuk produk yang diklik itu.
 
 7. Membuat halaman detail untuk setiap item yang terdapat pada halaman daftar Item. Halaman ini dapat diakses dengan menekan salah satu item pada halaman daftar Item. Tampilkan seluruh atribut pada model item kamu pada halaman ini. Tambahkan tombol untuk kembali ke halaman daftar item.
 <br>Jawaban:<br>
+Perlu dibuat file product_details.dart yang menangani halaman detail untuk suatu produk yang terdapat pada halaman daftar produk di aplikasi Flutter ini. Pada kode di file ini, dibuat widget ProductDetails dengan constructor yang menerima data detail atau atribut-atribut produk sebagai parameternya, seperti nama, harga, deskripsi, kategori, dan kuantitas produk tersebut. Pada method build(), terdapat implementasi tombol untuk kembali ke halaman daftar item.
+```dart
+...
+appBar: AppBar(
+        title: Text(name),
+        leading: IconButton(
+          icon: const Icon(Icons.arrow_back),
+          onPressed: () {
+            Navigator.pop(context);
+          },
+        ),
+      ),
+...
+```
+Selain itu, masing-masing atribut atau property dari produk ditampilkan menggunakan widget Text.
+```dart
+...
+body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Text(
+              "Product Name: $name",
+              style: const TextStyle(fontSize: 24.0, fontWeight: FontWeight.bold),
+            ),
+            const SizedBox(height: 20),
+            Text(
+              price == 0 ? "Price: FREE" : "Price: $price",
+              style: const TextStyle(fontSize: 16.0),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              "Description: $description",
+              style: const TextStyle(fontSize: 16.0),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              "Category: $category",
+              style: const TextStyle(fontSize: 16.0),
+            ),
+            const SizedBox(height: 10),
+            Text(
+              quantity == 0 ? "Amount: OUT OF STOCK" : "Amount: $quantity",
+              style: const TextStyle(fontSize: 16.0),
+            ),
+          ],
+        ),
+      ),
+...
+```
 
 8. Melakukan filter pada halaman daftar item dengan hanya menampilkan item yang terasosiasi dengan pengguna yang login.
 <br>Jawaban:<br>
+Pada kode di list_product.dart yang berguna dalam menangani tampilan dan fungsionalitas dari halaman daftar item di aplikasi Flutter ini, fungsi fetchProducts() memanfaatkan CookieRequest untuk mengirimkan request http GET ke endpoint JSON pada proyek Django bakery serta memperoleh response berupa data JSON yang kemudian diubah menjadi data kumpulan objek Product.
+```dart
+...
+  Future<List<Product>> fetchProducts(CookieRequest request) async {
+    final response = await request.get('http://localhost:8000/json/');
+    var data = response;
+    List<Product> listProducts = [];
+    for (var d in data) {
+      if (d != null) {
+        listProducts.add(Product.fromJson(d));
+      }
+    }
+    return listProducts;
+  }
+...
+```
+Terlihat di proyek Django bakery, pada fungsi view show_json() di views.py pada direktori aplikasi main, yang merupakan view yang dituju oleh path URL http://localhost:8000/json/, objek Product yang diperoleh dan dikembalikan sebagai data JSON sudah di-filter berdasarkan user yang membuat request-nya.
+```python
+def show_json(request):
+    data = Product.objects.filter(user=request.user)
+    return HttpResponse(serializers.serialize("json", data), content_type="application/json")
+```
+Jadi, produk yang akan dikembalikan dan ditampilkan adalah produk yang dibuat oleh pengguna itu sendiri.
 
 9. Menjawab beberapa pertanyaan berikut pada README.md pada root folder (silakan modifikasi README.md yang telah kamu buat sebelumnya; tambahkan subjudul untuk setiap tugas).
 <br>Jawaban:<br>
